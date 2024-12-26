@@ -14,17 +14,11 @@ return new class extends Migration
     {
         Schema::create('games', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('player1_id');
-            $table->unsignedBigInteger('player2_id')->nullable();
+            $table->foreignIdFor(User::class);
+            $table->string('player1_name')->default('Player 1');
+            $table->string('player2_name')->default('Player 2');
             $table->json('board');
-            $table->unsignedBigInteger('winner_id')->nullable();
-            $table->enum('game_type', ['local', 'online']);
             $table->timestamps();
-
-            // Foreign key constraints
-            $table->foreign('player1_id')->references('id')->on('users')->cascadeOnDelete();
-            $table->foreign('player2_id')->references('id')->on('users')->nullOnDelete();
-            $table->foreign('winner_id')->references('id')->on('users')->nullOnDelete();
         });
     }
 

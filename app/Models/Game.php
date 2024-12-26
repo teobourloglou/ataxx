@@ -14,10 +14,6 @@ class Game extends Model
 
     protected $guarded = [];
 
-    protected $casts = [
-        'game_type' => GameType::class
-    ];
-
     /*
     |--------------------------------------------------------------------------
     | Relationships
@@ -29,18 +25,8 @@ class Game extends Model
      *  BelongsTo  *
      **************/
 
-    public function player1():BelongsTo
+    public function user():BelongsTo
     {
-        return $this->belongsTo(User::class, 'player1_id');
-    }
-
-    public function player2():BelongsTo
-    {
-        return $this->belongsTo(User::class, 'player2_id');
-    }
-
-    public function winner():BelongsTo
-    {
-        return $this->belongsTo(User::class, 'winner_id');
+        return $this->belongsTo(User::class);
     }
 }
