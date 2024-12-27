@@ -1,3 +1,5 @@
+@props(['background' => 'bg-black'])
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
@@ -15,7 +17,7 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="antialiased font-pixel">
-        <div class="min-h-screen bg-black">
+        <div class="min-h-screen {{ $background }}">
             <livewire:layout.navigation />
 
             <!-- Page Content -->

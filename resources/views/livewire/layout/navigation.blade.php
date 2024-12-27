@@ -16,22 +16,25 @@ new class extends Component
     }
 }; ?>
 
-<nav x-data="{ open: false }" class="bg-black border-b border-gray-700">
+<nav x-data="{ open: false }" class="bg-transparent border-b border-white border-opacity-25">
     <!-- Primary Navigation Menu -->
     <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <div class="flex">
                 <!-- Logo -->
                 <div class="flex items-center shrink-0">
-                    <a href="{{ route('dashboard') }}" wire:navigate>
-                        <x-application-logo class="block w-auto text-gray-800 fill-current h-9 dark:text-gray-200" />
+                    <a href="{{ route('game') }}" wire:navigate>
+                        <x-application-logo class="block w-auto mt-2 text-gray-800 fill-current h-9 dark:text-gray-200" />
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" wire:navigate>
-                        {{ __('Dashboard') }}
+                    <x-nav-link :href="route('game')" :active="request()->routeIs('game')" wire:navigate>
+                        {{ __('Game') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('scoreboard')" :active="request()->routeIs('scoreboard')" wire:navigate>
+                        {{ __('Scoreboard') }}
                     </x-nav-link>
                 </div>
             </div>
@@ -40,7 +43,7 @@ new class extends Component
             <div class="hidden sm:flex sm:items-center sm:ms-6">
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
-                        <button class="inline-flex items-center px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out bg-white border border-transparent rounded-md dark:text-gray-400 dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none">
+                        <button class="inline-flex items-center px-3 py-2 text-sm font-medium leading-4 text-white transition duration-150 ease-in-out border-2 border-yellow-600 rounded-md hover:text-gray-200 focus:outline-none">
                             <div x-data="{{ json_encode(['name' => auth()->user()->name]) }}" x-text="name" x-on:profile-updated.window="name = $event.detail.name"></div>
 
                             <div class="ms-1">
@@ -81,8 +84,11 @@ new class extends Component
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" wire:navigate>
-                {{ __('Dashboard') }}
+            <x-responsive-nav-link :href="route('game')" :active="request()->routeIs('game')" wire:navigate>
+                {{ __('Game') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('scoreboard')" :active="request()->routeIs('scoreboard')" wire:navigate>
+                {{ __('Scoreboard') }}
             </x-responsive-nav-link>
         </div>
 

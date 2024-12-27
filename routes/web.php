@@ -4,9 +4,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome');
 
-Route::view('dashboard', 'dashboard')
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+Route::view('game', 'game')
+    ->middleware(['auth'])
+    ->name('game');
+
+Route::view('scoreboard', 'scoreboard')
+    ->middleware(['auth'])
+    ->name('scoreboard');
 
 Route::view('profile', 'profile')
     ->middleware(['auth'])

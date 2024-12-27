@@ -58,18 +58,8 @@ class User extends Authenticatable
      *  HasMany  *
      **************/
 
-    public function gamesAsPlayer1():HasMany
+    public function players():HasMany
     {
-        return $this->hasMany(Game::class, 'player1_id');
-    }
-
-    public function gamesAsPlayer2():HasMany
-    {
-        return $this->hasMany(Game::class, 'player2_id');
-    }
-
-    public function gamesWon():HasMany
-    {
-        return $this->hasMany(Game::class, 'winner_id');
+        return $this->hasMany(Player::class);
     }
 }
