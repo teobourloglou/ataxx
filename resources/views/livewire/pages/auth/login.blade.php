@@ -20,7 +20,7 @@ new #[Layout('layouts.guest')] class extends Component
 
         Session::regenerate();
 
-        $this->redirectIntended(default: route('game', absolute: false), navigate: true);
+        $this->redirectIntended(default: route('game.create', absolute: false), navigate: true);
     }
 }; ?>
 

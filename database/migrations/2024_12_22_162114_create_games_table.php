@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignIdFor(User::class);
             $table->unsignedBigInteger('player1_id');
             $table->unsignedBigInteger('player2_id');
-            $table->unsignedBigInteger('winner_id');
+            $table->unsignedBigInteger('winner_id')->nullable();
             $table->json('board');
             $table->boolean('finished')->default(false);
             $table->timestamps();

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Game extends Model
 {
@@ -26,17 +27,23 @@ class Game extends Model
      *  BelongsTo  *
      **************/
 
-    public function user():BelongsTo
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    /**************
-     *  HasMany  *
-     **************/
-
-    public function players():HasMany
+    public function player1()
     {
-    return $this->hasMany(Player::class);
+        return $this->belongsTo(Player::class, 'player1_id');
+    }
+
+    public function player2()
+    {
+        return $this->belongsTo(Player::class, 'player2_id');
+    }
+
+    public function winner()
+    {
+        return $this->belongsTo(Player::class, 'winner_id');
     }
 }

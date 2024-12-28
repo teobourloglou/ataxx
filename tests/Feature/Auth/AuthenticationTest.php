@@ -32,7 +32,7 @@ class AuthenticationTest extends TestCase
 
         $component
             ->assertHasNoErrors()
-            ->assertRedirect(route('game', absolute: false));
+            ->assertRedirect(route('game.create', absolute: false));
 
         $this->assertAuthenticated();
     }
@@ -60,7 +60,7 @@ class AuthenticationTest extends TestCase
 
         $this->actingAs($user);
 
-        $response = $this->get('/game');
+        $response = $this->get('/game/create');
 
         $response
             ->assertOk()

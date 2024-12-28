@@ -16,10 +16,10 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(User::class);
             $table->string('name');
-            $table->integer('total_games');
-            $table->integer('wins');
-            $table->integer('losses');
-            $table->integer('highscore');
+            $table->integer('total_games')->default(0);
+            $table->integer('wins')->default(0);
+            $table->integer('losses')->default(0);
+            $table->integer('highscore')->default(0);
             $table->timestamps();
         });
     }

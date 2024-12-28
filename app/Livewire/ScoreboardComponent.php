@@ -21,7 +21,7 @@ class ScoreboardComponent extends Component
         $this->userPlayers = $this->getPlayers(true);
     }
 
-    public function getPlayers(bool $filterOnlyUserPlayers)
+    public function getPlayers(bool $filterOnlyUserPlayers):Collection
     {
         if ($filterOnlyUserPlayers)
             return Player::where('user_id', Auth::id())->orderBy('wins', 'desc')->take(10)->get();

@@ -2,10 +2,13 @@
 
 namespace App\Livewire;
 
+use App\Models\Game;
+use App\Models\Player;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Session;
 use Livewire\Component;
 
-class GameComponent extends Component
+class PlayGameComponent extends Component
 {
 
     #[Session]
@@ -14,11 +17,20 @@ class GameComponent extends Component
     #[Session]
     public int $currentPlayer = 1;
 
+    public bool $newPlayerOne = false;
+    public bool $newPlayerTwo = false;
+
     #[Session]
     public String $playerOneName = "";
 
     #[Session]
     public String $playerTwoName = "";
+
+    // #[Session]
+    // public Player $playerOne;
+
+    // #[Session]
+    // public Player $playerTwo;
 
     #[Session]
     public int $playerOnePoints = 0;
@@ -34,6 +46,17 @@ class GameComponent extends Component
 
     #[Session]
     public array $board;
+
+    public function mount()
+    {
+        $game = Game::find(request()->route('game'));
+
+        if ($game->user_id == Auth::id()) {
+            $this->board = json_decode($game->board);
+        } else {
+            // throw new
+        }
+    }
 
     public function startGame():void
     {
@@ -80,6 +103,6 @@ class GameComponent extends Component
 
     public function render()
     {
-        return view('livewire.game-component');
+        return view('livewire.play-game-component');
     }
 }
