@@ -2,7 +2,7 @@
 
     <div class="flex flex-col justify-between col-span-3">
         <div class="flex flex-col items-center justify-center w-full py-4 border-2 border-yellow-600 ring-2 ring-yellow-700">
-            <h2 class="text-4xl font-bold text-white">{{ strtoupper($playerOneName) }}</h2>
+            <h2 class="text-4xl font-bold text-white">{{ strtoupper($playerOne->name) }}</h2>
             <h2 class="text-4xl font-bold text-white">{{ $playerOnePoints }}</h2>
         </div>
         @if($currentPlayer == 1)
@@ -16,7 +16,7 @@
             <h2 class="text-5xl font-bold text-white">{{ str_pad($playerOneCellsCount, 2, "0", STR_PAD_LEFT) }}</h2>
         </div>
     </div>
-    <div class="flex flex-col items-center justify-start col-span-6 gap-2">
+    <div class="relative flex flex-col items-center justify-start col-span-6 gap-2">
 
         <div class="flex flex-col items-center justify-center w-full gap-2 p-2 border-2 border-yellow-600 ring-2 ring-yellow-700">
             @foreach($board as $row)
@@ -26,7 +26,7 @@
                     @foreach($row as $column)
 
                         <div wire:key='"row" + $row + "column" + $column' class="w-full grow">
-                            <x-game.cell :value="$column" />
+                            <x-game.cell :value="$column" :y="$loop->parent->index" :x="$loop->index" />
                         </div>
 
                     @endforeach
@@ -36,10 +36,16 @@
             @endforeach
         </div>
 
+        @if($gameFinished)
+            <div class="absolute top-1/2">
+                <h2 class="text-4xl font-bold drop-shadow-xl animate-pulse">{{ $gameFinishedText }}</h2>
+            </div>
+        @endif
+
     </div>
     <div class="flex flex-col justify-between col-span-3">
         <div class="flex flex-col items-center justify-center w-full py-4 border-2 border-yellow-600 ring-2 ring-yellow-700">
-            <h2 class="text-4xl font-bold text-white">{{ strtoupper($playerTwoName) }}</h2>
+            <h2 class="text-4xl font-bold text-white">{{ strtoupper($playerTwo->name) }}</h2>
             <h2 class="text-4xl font-bold text-white">{{ $playerTwoPoints }}</h2>
         </div>
         @if($currentPlayer == 2)
