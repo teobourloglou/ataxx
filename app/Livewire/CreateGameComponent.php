@@ -90,7 +90,7 @@ class CreateGameComponent extends Component
         if ($name && !$id) {
             return Player::create([
                 'user_id' => Auth::id(),
-                'name' => $this->playerOneName
+                'name' => $name
             ])->id;
         } else if ($id && !$name) {
             return $id;
