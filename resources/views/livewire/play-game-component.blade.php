@@ -5,7 +5,7 @@
             <h2 class="text-4xl font-bold text-white">{{ strtoupper($playerOne->name) }}</h2>
             <h2 class="text-4xl font-bold text-white">{{ $playerOnePoints }}</h2>
         </div>
-        @if($currentPlayer == 1)
+        @if($currentPlayer == 1 && !$gameFinished)
             <div class="w-full">
                          <div class="text-5xl text-center text-red-700">RED</div>
                     <div class="text-3xl text-center text-neutral-200">to Play</div>
@@ -48,7 +48,7 @@
             <h2 class="text-4xl font-bold text-white">{{ strtoupper($playerTwo->name) }}</h2>
             <h2 class="text-4xl font-bold text-white">{{ $playerTwoPoints }}</h2>
         </div>
-        @if($currentPlayer == 2)
+        @if($currentPlayer == 2 && !$gameFinished)
             <div class="w-full">
                 <h2 class="font-bold animate-pulse">
                     <div class="text-5xl text-center text-blue-700">BLUE</div>
@@ -62,7 +62,7 @@
     </div>
 
     <div class="flex justify-center col-span-full">
-        <button wire:click='exitGame()' class="text-xl text-white opacity-75 drop-shadow-xl">EXIT</button>
+        <button wire:click='saveAndExit()' class="text-xl text-white opacity-75 drop-shadow-xl">SAVE & EXIT</button>
     </div>
 
 </div>

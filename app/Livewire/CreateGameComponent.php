@@ -17,6 +17,8 @@ class CreateGameComponent extends Component
 
     public Collection $players;
 
+    public Collection $games;
+
     public ?int $playerOneId = null;
 
     public ?int $playerTwoId = null;
@@ -28,6 +30,7 @@ class CreateGameComponent extends Component
     public function mount()
     {
         $this->players = Player::where('user_id', Auth::id())->get();
+        $this->games = Game::where('user_id', Auth::id())->where('finished', false)->with('player1', 'player2')->get();
     }
 
     public function validatePlayerData(?int $id, String $name, int $player):bool

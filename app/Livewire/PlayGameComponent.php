@@ -16,9 +16,13 @@ class PlayGameComponent extends Component
 
     public int $currentPlayer = 1;
 
+    public Game $game;
+
     public Player $playerOne;
 
     public Player $playerTwo;
+
+    public Player $winner;
 
     public int $playerOnePoints = 0;
 
@@ -37,25 +41,20 @@ class PlayGameComponent extends Component
 
     public function mount()
     {
-        $game = Game::find(request()->route('game'));
-        $this->playerOne = $game->player1;
-        $this->playerTwo = $game->player2;
+        $this->game = Game::find(request()->route('game'));
+        $this->playerOne = $this->game->player1;
+        $this->playerTwo = $this->game->player2;
 
-        if ($game->user_id == Auth::id()) {
-            $this->board = json_decode($game->board);
+        if ($this->game->user_id == Auth::id()) {
+            $this->board = json_decode($this->game->board);
         } else {
-            // throw new
+            abort(404);
         }
 
         $this->playerOneCellsCount = $this->countPlayerCells(1);
         $this->playerTwoCellsCount = $this->countPlayerCells(2);
         $this->playerOnePoints = $this->countPlayerCells(1) * 10;
         $this->playerTwoPoints = $this->countPlayerCells(2) * 10;
-    }
-
-    public function exitGame():void
-    {
-
     }
 
     public function countPlayerCells(int $player): int
@@ -122,11 +121,13 @@ class PlayGameComponent extends Component
     {
         if ($this->playerOnePoints == 0) {
             $this->gameFinishedText = "PLAYER 2 IS THE WINNER";
+            $this->winner = $this->playerTwo;
             return true;
         }
 
         if ($this->playerTwoPoints == 0) {
             $this->gameFinishedText = "PLAYER 1 IS THE WINNER";
+            $this->winner = $this->playerOne;
             return true;
         }
 
@@ -143,8 +144,10 @@ class PlayGameComponent extends Component
         if (!$movesLeft) {
             if ($this->playerOnePoints > $this->playerTwoPoints) {
                 $this->gameFinishedText = "PLAYER 1 IS THE WINNER";
+                $this->winner = $this->playerOne;
             } else if ($this->playerOnePoints < $this->playerTwoPoints) {
                 $this->gameFinishedText = "PLAYER 2 IS THE WINNER";
+                $this->winner = $this->playerTwo;
             } else {
                 $this->gameFinishedText = "THE GAME ENDED ON TIE";
             }
@@ -161,9 +164,46 @@ class PlayGameComponent extends Component
         $this->currentPlayer = $this->currentPlayer === 1 ? 2 : 1;
         $this->playerOneCellsCount = $this->countPlayerCells(1);
         $this->playerTwoCellsCount = $this->countPlayerCells(2);
-        $this->playerOnePoints = $this->countPlayerCells(1) * 10;
-        $this->playerTwoPoints = $this->countPlayerCells(2) * 10;
-        $this->checkMoveAvailability();
+        $this->playerOnePoints = $this->playerOneCellsCount * 10;
+        $this->playerTwoPoints = $this->playerTwoCellsCount * 10;
+        $this->gameFinished = $this->checkMoveAvailability();
+        if ($this->gameFinished)
+            $this->finishGame();
+    }
+
+    public function finishGame():void
+    {
+        $this->game->winner_id = $this->winner->id;
+        $this->game->board = json_encode($this->board);
+        $this->game->finished = true;
+        $this->game->save();
+
+        $this->playerOne->total_games++;
+        $this->playerTwo->total_games++;
+
+        if ($this->playerOne == $this->winner) {
+            $this->playerOne->wins++;
+            $this->playerTwo->losses++;
+            if ($this->playerOnePoints > $this->playerOne->highscore)
+                $this->playerOne->highscore = $this->playerOnePoints;
+        }
+
+        if ($this->playerTwo == $this->winner) {
+            $this->playerTwo->wins++;
+            $this->playerOne->losses++;
+            if ($this->playerTwoPoints > $this->playerTwo->highscore)
+                $this->playerTwo->highscore = $this->playerTwoPoints;
+        }
+
+        $this->playerOne->save();
+        $this->playerTwo->save();
+    }
+
+    public function saveAndExit()
+    {
+        $this->game->board = json_encode($this->board);
+        $this->game->save();
+        return redirect()->route('game.create');
     }
 
     public function render()
