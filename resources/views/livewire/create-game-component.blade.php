@@ -42,21 +42,23 @@
         <div class="font-semibold text-red-400">{{ $playerTwoErrorMessage }}</div>
     </div>
 
-    <div class="mt-6 col-span-full">
-        <h3 class="text-3xl font-bold text-center text-indigo-200">LOAD GAME</h3>
-        <div class="grid w-full grid-cols-4 gap-6 mt-6">
-            @foreach ($games as $game)
-                <a href="{{ route('game.play', ['game' => $game]) }}" class="flex flex-col items-center gap-4 p-4 bg-black border-2 border-yellow-600 bg-opacity-30">
-                    <span class="text-lg font-semibold">
-                        {{ $game->player1->name }}
-                    </span>
-                    <span class="text-2xl font-bold">VS</span>
-                    <span class="text-lg font-semibold">
-                        {{ $game->player2->name }}
-                    </span>
-                </a>
-            @endforeach
+    @if($games)
+        <div class="mt-6 col-span-full">
+            <h3 class="text-3xl font-bold text-center text-indigo-200">LOAD GAME</h3>
+            <div class="grid w-full grid-cols-4 gap-6 mt-6">
+                @foreach ($games as $game)
+                    <a href="{{ route('game.play', ['game' => $game]) }}" class="flex flex-col items-center gap-4 p-4 bg-black border-2 border-yellow-600 bg-opacity-30">
+                        <span class="text-lg font-semibold">
+                            {{ $game->player1->name }}
+                        </span>
+                        <span class="text-2xl font-bold">VS</span>
+                        <span class="text-lg font-semibold">
+                            {{ $game->player2->name }}
+                        </span>
+                    </a>
+                @endforeach
+            </div>
         </div>
-    </div>
+    @endif
 
 </div>
