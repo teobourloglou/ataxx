@@ -24,6 +24,8 @@
             <main>
                 {{ $slot }}
             </main>
+
+            <p class="pb-5 mt-10 text-sm leading-5 text-center text-white">⌨️ built by <a class="font-bold" target="_blank" href="https://teobourloglou.com">@teobourloglou</a></p>
         </div>
     </body>
 </html>

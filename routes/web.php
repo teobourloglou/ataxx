@@ -13,6 +13,8 @@ Route::middleware('auth')->group(function() {
 
     Route::view('scoreboard', 'scoreboard')->name('scoreboard');
 
+    Route::view('rules', 'rules')->name('rules');
+
     Route::view('profile', 'profile')->name('profile');
 });
 
