@@ -32,7 +32,7 @@ new #[Layout('layouts.guest')] class extends Component
 
         Auth::login($user);
 
-        $this->redirect(route('game', absolute: false), navigate: true);
+        $this->redirect(route('game.create', absolute: false), navigate: true);
     }
 }; ?>
 
